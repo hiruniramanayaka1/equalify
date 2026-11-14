@@ -20,6 +20,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-frontend-${{ hashFiles('apps/frontend/package.json', 'apps/frontend/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-frontend-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -39,6 +46,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-backend-${{ hashFiles('apps/backend/package.json', 'package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-backend-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
